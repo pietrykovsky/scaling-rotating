@@ -17,11 +17,11 @@ def measure(image_name: str, interpolation):
     original_image = Image.open(image_name)
     execution_start = time.time()
     generated_image = resize(
-        image=original_image, scale_factor=2, interpolation=interpolation
+        image=original_image, scale_factor=0.5, interpolation=interpolation
     )
     resize_execution_time = time.time() - execution_start
     generated_image = resize(
-        image=generated_image, scale_factor=0.5, interpolation=interpolation
+        image=generated_image, scale_factor=2, interpolation=interpolation
     )
     generated_image.save(f"{interpolation.__name__}_resized.bmp")
     mse = calculate_mean_squared_error(generated_image, original_image)
