@@ -30,7 +30,7 @@ def measure(image_name: str, interpolation):
 
     execution_start = time.time()
     generated_image = rotate(
-        image=original_image, angle=180, interpolation=interpolation
+        image=original_image, angle=60, interpolation=interpolation
     )
     rotate_execution_time = time.time() - execution_start
     generated_image.save(f"{interpolation.__name__}_rotated.bmp")
