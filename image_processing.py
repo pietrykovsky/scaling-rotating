@@ -14,9 +14,9 @@ def resize(image: Image, scale_factor: float, interpolation) -> Image:
     """
     pixel_matrix = np.array(image)
     shape = np.array(pixel_matrix.shape)
-    new_height, new_width = shape[:2] * scale_factor
-    new_height, new_width = int(new_height), int(new_width)
-    resized_image = np.zeros(shape=(new_height, new_width, shape[2]), dtype="uint8")
+    shape[:2] = shape[:2] * scale_factor
+    new_height, new_width = int(shape[0]), int(shape[1])
+    resized_image = np.zeros(shape=shape, dtype="uint8")
     for i in range(new_height):
         for j in range(new_width):
             resized_image[i, j] = interpolation(
@@ -37,9 +37,9 @@ def rotate(image: Image, angle: float, interpolation) -> Image:
     :return: Rotated image
     """
     pixel_matrix = np.array(image)
-    rows, cols, channels = pixel_matrix.shape
+    rows, cols = pixel_matrix.shape[:2]
     x_center, y_center = rows // 2, cols // 2
-    rotated_image = np.zeros(shape=(rows, cols, channels), dtype="uint8")
+    rotated_image = np.zeros(shape=pixel_matrix.shape, dtype="uint8")
     radians = math.radians(angle)
     for i in range(rows):
         for j in range(cols):

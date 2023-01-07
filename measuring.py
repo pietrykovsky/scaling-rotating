@@ -3,7 +3,7 @@ import time
 
 from image_processing import resize, rotate
 from interpolation import nearest_neighbor, bilinear, bicubic
-from utils import calculate_mean_squared_error, get_image_difference
+from utils import calculate_mean_squared_error
 
 
 def measure(image_name: str, interpolation):
@@ -15,18 +15,16 @@ def measure(image_name: str, interpolation):
     :param interpolation: Interpolation function
     """
     original_image = Image.open(image_name)
-    execution_start = time.time()
     generated_image = resize(
         image=original_image, scale_factor=0.5, interpolation=interpolation
     )
-    resize_execution_time = time.time() - execution_start
+    execution_start = time.time()
     generated_image = resize(
         image=generated_image, scale_factor=2, interpolation=interpolation
     )
+    resize_execution_time = time.time() - execution_start
     generated_image.save(f"{interpolation.__name__}_resized.bmp")
     mse = calculate_mean_squared_error(generated_image, original_image)
-    diff = get_image_difference(generated_image, original_image)
-    diff.save(f"{interpolation.__name__}_diff.bmp")
 
     execution_start = time.time()
     generated_image = rotate(
